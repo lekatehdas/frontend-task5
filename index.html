@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="resources/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="FlexBox_GridScheme.css">
+    <link rel="shortcute icon" href="favicon.ico?v=2">
+    <title>FlexBox_GridScheme</title>
+</head>
+
+
+<body>
+<div class="grid-container">
+    <header>
+        <img src="logo.svg" alt="Logo">
+        <a class="active" href="javascript:switchContent('button-home')" id="button-home">Home</a>
+        <a href="javascript:switchContent('button-3d-product')" id="button-3d-product">3D Product</a>
+    </header>
+
+
+    <aside class="sub-nav" id="sub-nav">
+        <div class="active" id="page-welcome" onclick="switchInnerContent('page-welcome')">Welcome</div>
+        <div id="page-information" onclick="switchInnerContent('page-information')">Information</div>
+    </aside>
+
+
+    <main id="content" class="main-stage">
+        <iframe title="Arcslinger a gold smoke robot" frameborder="0" allowfullscreen mozallowfullscreen="true"
+                webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking
+                execution-while-out-of-viewport execution-while-not-rendered web-share
+                src="https://sketchfab.com/models/5ce76a4f54c0423d96fc82c968c7d555/embed?autospin=1&autostart=1&dnt=1"
+                width="100%" height="100%"> </iframe>
+    </main>
+
+
+    <aside class="side-bar">
+        <h1>Our other products</h1>
+        <div class="right-side-container">
+            <div class="mySlides fade">
+                <img src="right-one.svg" alt="one" width="100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img src="right-two.svg" alt="two" width="100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img src="right-three.svg" alt="three" width="100%">
+            </div>
+        </div>
+    </aside>
+
+
+    <footer>
+        <img src="css-logo.png" alt="css">
+        <img src="html-logo.png" alt="html">
+        <img src="js-logo.png" alt="js">
+    </footer>
+</div>
+
+
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides")
+
+        for (i = 0; i < slides.length; i++)
+            slides[i].style.display = "none";
+
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+
+        slides[slideIndex-1].style.display = "block";
+        setTimeout(showSlides, 3000);
+    }
+
+    function switchContent(id) {
+        switchActive(id)
+        let left = document.getElementById('sub-nav')
+        if (id === 'button-home') {
+            left.innerHTML =
+                `
+                <div class="active" id="page-welcome" onclick="switchInnerContent('page-welcome')">Welcome</div>
+                <div id="page-information" onclick="switchInnerContent('page-information')">Information</div>
+                `
+            switchInnerContent('page-welcome')
+        }
+        else {
+            left.innerHTML =
+                `
+            <div class="active" id="page-view" onclick="switchInnerContent('page-view')">View</div>
+            <div class="sub-nav">
+                <div class="hardware" id="hardware">Hardware Tech Specs</div>
+                <div class="dropdown">
+                    <a href="javascript:switchInnerContent('page-parts', 'hardware')" id="page-parts">Parts</a>
+                    <a href="javascript:switchInnerContent('page-measurements', 'hardware')" id="page-measurements">Measurements</a>
+                </div>
+            </div>
+            <div id="page-description" onclick="switchInnerContent('page-description')">Description</div>
+            <div id="page-how-to-interface" onclick="switchInnerContent('page-how-to-interface')">How to interface with Wheelye</div>
+            <div id="page-what-can-do" onclick="switchInnerContent('page-what-can-do')">What Wheelye can do</div>
+            `
+            switchInnerContent('page-view')
+        }
+    }
+
+    function switchActive(id) {
+        let ele = document.getElementById(id)
+        let hardware = document.getElementById('hardware')
+        let children
+
+        if (id === 'hardware') {
+            children = ele.parentElement.parentElement.children
+        }
+
+        else {
+            children = ele.parentElement.children
+        }
+
+        if (hardware != null && hardware.classList.contains('active')) {
+            hardware.classList.remove('active')
+        }
+
+        for (let i = 0; i < children.length; i++) {
+            children[i].classList.remove('active')
+        }
+
+        ele.classList.add('active')
+    }
+
+    function switchInnerContent(id, shellId = null) {
+        if (shellId != null) {
+            switchActive(shellId)
+        }
+        else {
+            switchActive(id)
+        }
+        let content = document.getElementById('content')
+        switch (id) {
+            case 'page-information':
+                content.innerHTML =
+                    `
+                    <p style="margin: 0 15%">
+                    Welcome to Lords Over Growing Organisms (LOGO), a robotic overlords webpage!
+                    We are a new startup company planning to take over the world from puny humans.
+                    <br>
+                    You saw our old top model on the welcoming page, but now we have made a better robot to conquer the world!
+                    Click the 3d Product to find out more
+                    </p>
+                    `
+                break
+            case 'page-welcome':
+                content.innerHTML =
+                    `
+                    <iframe title="Arcslinger a gold smoke robot" frameborder="0" allowfullscreen
+                    mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking"
+                    xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share
+                    src="https://sketchfab.com/models/5ce76a4f54c0423d96fc82c968c7d555/embed?autospin=1&autostart=1&dnt=1"
+                    width="100%" height="100%"> </iframe>
+                    `
+                break
+            case 'page-view':
+                content.innerHTML =
+                    `
+                    <iframe title="Droid 027 - Texturing Challenge: Riding Robot" frameborder="0" allowfullscreen
+                    mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking"
+                    xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share
+                    src="https://sketchfab.com/models/7489bc6d64214b9d9c9b0a127591858f/embed?autospin=1&autostart=1&dnt=1"
+                    width="100%" height="100%"> </iframe>
+                    `
+                break
+            case 'page-parts':
+                content.innerHTML =
+                    `
+                    <p style="margin: 0 15%">
+                    Wheelye has been made from the BEST components we could harvest from half a million toasters! It has a wheel that functions as - a wheel.
+                    It has an impressive amount of cameras as eyes, two in fact, neither of which faces forward, optimising the mayhem potential.
+                    <br>
+                    Upgrades are possible for extra fees, including a mouth and portable speaker.
+                    </p>
+                    `
+                break
+            case 'page-measurements':
+                content.innerHTML =
+                    `
+                    <p style="margin: 0 15%">
+                    Wheelye is impressive 65,5 meters tall and weighs just under three and a half million pancakes.
+                    The total width in its most comprehensive bit is the same as manhattan island, the ego.
+                    </p>
+                    `
+                break
+            case 'page-description':
+                content.innerHTML =
+                    `
+                    <p style="margin: 0 15%">
+                    It is a world-conquering robot mounted on a wheel. The most impressive thing about it is how it will
+                     subdue anything it encounters with pure, maddening boredom.
+                    </p>
+                    `
+                break
+            case 'page-how-to-interface':
+                content.innerHTML =
+                    `
+                    <p>
+                    Simple, you need only scream loud and hope it does not interface with you.
+                    </p>
+                    `
+                break
+            case 'page-what-can-do':
+                content.innerHTML =
+                    `
+                    <p style="margin: 0 15%">
+                    So far, we have managed to teach Wheelye to count to 8 and toast marshmallows.
+                    </p>
+                    `
+                break
+        }
+    }
+</script>
+</body>
+</html>
